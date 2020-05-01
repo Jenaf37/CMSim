@@ -16,19 +16,27 @@ def startDist():
 
 
 
-remig = SimReMig(addSelectFirstDesiresFromDesiresLoose(desires)
+remiga = SimReMig(addSelectFirstDesiresFromDesiresLoose(desires)
                    ,deSelectFirstOptionFromDesires(desires)
                    ,addSelectFirstDesiredOptionFromDesires(desires)
                    ,1760)
-mig  = SimMigrate (addSelectFirstDesiredOptionFromDesires(desires)
-                    ,deSelectFirstOptionFromDesires(desires)
-                    ,startDist)
-res  = SimRespec (addSelectFirstDesiredOptionFromDesires(desires),1760)                 
+remigb = SimReMig(addSelectFirstDesiresFromDesiresLoose(desires)
+                   ,deSelectHighestOptionFromDesires(desires)
+                   ,addSelectFirstDesiredOptionFromDesires(desires)
+                   ,1760)
+remigc = SimReMig(addSelectFirstDesiresFromDesiresLoose(desires)
+                   ,deSelectLowestOptionFromDesires(desires)
+                   ,addSelectFirstDesiredOptionFromDesires(desires)
+                   ,1760)                   
+#mig  = SimMigrate (addSelectFirstDesiredOptionFromDesires(desires)
+#                    ,deSelectFirstOptionFromDesires(desires)
+#                    ,startDist)
+#res  = SimRespec (addSelectFirstDesiredOptionFromDesires(desires),1760)                 
                    
 sims = []
-sims.append([remig,'remig'])
-#sims.append([mig,'mig'])
-sims.append([res,'resp'])
+sims.append([remiga,'delevel in order'])
+sims.append([remigb,'delevel highest'])
+sims.append([remigc,'delevel lowest'])
 
 
 def runner(sims,time):#sims: [[SIM,name]] atm jsut for a yolo run
@@ -36,6 +44,7 @@ def runner(sims,time):#sims: [[SIM,name]] atm jsut for a yolo run
     for sim in sims:
         results = sim[0].run(time/len(sims))
         shortRes.append([sim[1],len(results),sum(results)/len(results)])
-    print(shortRes)
+    for stuff in shortRes:
+        print(stuff)
 
-runner(sims,60*60*6)
+runner(sims,60*60*17)
