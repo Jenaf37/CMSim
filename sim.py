@@ -23,6 +23,18 @@ class SimMigrate:
             results.append(costs)
         return results
 
+    def test(self):
+        x=self.startDist()
+        costs = 0
+        while True :
+            if not x.delevelWithSelector(self.deSelect):
+                break
+            costs +=1
+            while not x.addCMwithSelector(self.addSelect):
+                costs +=1
+        return [costs,x]
+        
+        
 class SimRespec:
 
     def __init__(self,addSelect,totalCM):
@@ -44,6 +56,17 @@ class SimRespec:
             results.append(costs)
         return results
         
+    def test(self):
+        x= cmDistribution()
+        costs = 5
+        CMspent = 0
+        while (CMspent < self.totalCM):
+            if x.addCMwithSelector(self.addSelect):
+                CMspent +=1
+            else :
+                costs +=1
+        return [costs,x]
+     
         
 class SimReMig:
     
@@ -76,3 +99,22 @@ class SimReMig:
                     
             results.append(costs)
         return results
+    
+    def test(self):
+        x= cmDistribution()
+        costs = 5
+        # respec without reroll
+        CMspent=0
+        while (CMspent < self.totalCM):
+            if not x.addCMwithSelector(self.addSelectLoose):
+                raise RuntimeError('Loose selector must always choose an option')
+            CMspent += 1
+            
+        #migrate the result to the desired ouput
+        while True :
+            if not x.delevelWithSelector(self.deSelect):
+                break
+            costs +=1
+            while not x.addCMwithSelector(self.addSelectStrict):
+                costs +=1
+        return [costs,x]

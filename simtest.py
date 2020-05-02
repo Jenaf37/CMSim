@@ -47,4 +47,10 @@ def runner(sims,time):#sims: [[SIM,name]] atm jsut for a yolo run
     for stuff in shortRes:
         print(stuff)
 
-runner(sims,60*60*17)
+def tester(sims):
+    for sim in sims:
+        print(sim[1])
+        print(sim[0].test()[0])
+        print(sim[0].test()[1].cmLevels)
+        
+tester(sims)
