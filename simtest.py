@@ -1,9 +1,9 @@
 from sim import *
 from selectors import *
 
-desires = [100]*16
-desires.append(80)
-desires.append(80)
+desires = [99]*16
+desires.append(88)
+desires.append(88)
 for i in range(22):
     desires.append(0)
 print(desires)
@@ -47,10 +47,15 @@ def runner(sims,time):#sims: [[SIM,name]] atm jsut for a yolo run
     for stuff in shortRes:
         print(stuff)
 
-def tester(sims):
+def tester(sims,timeout):
     for sim in sims:
-        print(sim[1])
-        print(sim[0].test()[0])
-        print(sim[0].test()[1].cmLevels)
-        
-tester(sims)
+        try:
+            print(sim[1])
+            result = sim[0].test(timeout)
+            print(result[0])
+            print(result[1].cmLevels)
+        except TestTimeout as m:
+            print(m)
+            
+tester(sims,-1)       
+#runner(sims,5*60)
